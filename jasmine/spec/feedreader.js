@@ -32,16 +32,16 @@ $(function() {
          * and that the URL is not empty.
          */
 
-         it('has a url', function() {
-             allFeeds.forEach(function (feed) {
+        it('has a url', function() {
+            allFeeds.forEach(function (feed) {
                 expect(feed.url).toBeDefined();
 
                 //make sure url is a string
                 expect(feed.url).toEqual(jasmine.any(String));
 
                 expect(feed.url.length).not.toBe(0);
-             });
-         });
+            });
+        });
 
 
         /* A test that loops through each feed
@@ -49,16 +49,16 @@ $(function() {
          * and that the name is not empty.
          */
 
-         it('has a name', function() {
-             allFeeds.forEach(function (feed) {
+        it('has a name', function() {
+            allFeeds.forEach(function (feed) {
                 expect(feed.name).toBeDefined();
 
                 //make sure name is a string
                 expect(feed.name).toEqual(jasmine.any(String));
 
                 expect(feed.name.length).not.toBe(0);
-             });
-         });
+            });
+        });
     });
 
 
@@ -75,7 +75,7 @@ $(function() {
             expect(document.body.classList.contains('menu-hidden')).toBe(true);
         });
         
-         /* A test that ensures the menu changes
+        /* A test that ensures the menu changes
           * visibility when the menu icon is clicked.
           */
 
@@ -95,14 +95,14 @@ $(function() {
 
 
     describe('Initial Entries', function() {
-         /* A test that ensures when the loadFeed
+        /* A test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          */
 
         beforeEach(function (done) {
             loadFeed(0, done);
-        })
+        });
 
         it('loadFeed completes its work', function() {
             expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
@@ -115,12 +115,14 @@ $(function() {
 
         beforeEach(function (done) {
             const feed = document.getElementsByClassName('feed')[0];
-            oldHTML = feed.innerHTML;
-            loadFeed(1, function () {
-                newHTML = feed.innerHTML;
-                done();
-            })
-        })
+            loadFeed(0, function () {
+                oldHTML = feed.innerHTML;
+                loadFeed(1, function () {
+                    newHTML = feed.innerHTML;
+                    done();
+                });
+            });
+        });
 
         /* A test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
