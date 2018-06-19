@@ -105,7 +105,7 @@ $(function() {
         });
 
         it('loadFeed completes its work', function() {
-            expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
+            expect(document.querySelectorAll('.feed .entry').length).toBeGreaterThan(0);
         });
     });
 
@@ -113,14 +113,15 @@ $(function() {
         let oldHTML;
         let newHTML;
 
-        beforeEach(function (done) {
+        beforeEach(async function (done) {
             const feed = document.getElementsByClassName('feed')[0];
-            loadFeed(0, function () {
+            await loadFeed(0, function () {
                 oldHTML = feed.innerHTML;
-                loadFeed(1, function () {
-                    newHTML = feed.innerHTML;
-                    done();
-                });
+            });
+
+            loadFeed(1, function () {
+                newHTML = feed.innerHTML;
+                done();
             });
         });
 
@@ -129,7 +130,7 @@ $(function() {
          */
 
         it('changes html', function() {
-            expect(oldHTML === newHTML).toBe(false);
+            expect(oldHTML).not.toEqual(newHTML);
         });
     });
 }());
